@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/inbox" android:title="Inbox" android:icon="@drawable/ic_home"></item>
+    <item android:id="@+id/profil" android:title="Pharmacie de garde" android:icon="@drawable/ic_medical"></item>
+    <item android:id="@+id/trajet" android:title="Pharmacie a proximite" android:icon="@drawable/ic_distance"></item>
+    <item android:id="@+id/setting" android:title="Parametre" android:icon="@drawable/ic_settings"></item>
+    <item android:id="@+id/Deconnexion" android:title="Deconnexion" android:icon="@drawable/ic_signs"></item>
+</menu>
