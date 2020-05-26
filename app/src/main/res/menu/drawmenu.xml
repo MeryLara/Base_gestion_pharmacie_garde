@@ -6,4 +6,9 @@
     <item android:id="@+id/trajet" android:title="Pharmacie a proximite" android:icon="@drawable/ic_distance"></item>
     <item android:id="@+id/setting" android:title="Parametre" android:icon="@drawable/ic_settings"></item>
     <item android:id="@+id/Deconnexion" android:title="Deconnexion" android:icon="@drawable/ic_signs"></item>
+
+
 </menu>
+
+
+

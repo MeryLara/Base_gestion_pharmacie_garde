@@ -70,6 +70,16 @@
                 android:text="Adresse"
                 android:textColor="#262626"
                 android:textSize="14dp" />
+            <TextView
+                android:id="@+id/txtDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtAdressPharma"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:text="date"
+                android:textColor="#262626"
+                android:textSize="14dp" />
 
 
         </RelativeLayout>

@@ -10,4 +10,25 @@ public class Garde {
         this.date = date;
         this.pharmacie = pharmacie;
     }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public Pharmacie getPharmacie() {
+        return pharmacie;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setPharmacie(Pharmacie pharmacie) {
+        this.pharmacie = pharmacie;
+    }
+
+    public Garde() {
+    }
+
+
 }

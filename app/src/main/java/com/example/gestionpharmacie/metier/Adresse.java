@@ -27,4 +27,8 @@ public class Adresse {
         this.atitude = atitude;
         this.longitude = longitude;
     }
+
+    public Adresse(String ville) {
+        this.ville = ville;
+    }
 }

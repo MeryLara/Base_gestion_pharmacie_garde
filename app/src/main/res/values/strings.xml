@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">GestionPharmacie</string>
 
-    <string-array name="planets_array" >
+    <string-array name="planets_array">
 
 
         <item>Pharmacien</item>
@@ -11,4 +11,7 @@
 
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="map_key" translatable="false">AIzaSyB_qsP8AOP_P0MdlPz-48TDaJYjTP3vbjo</string>
+    <string name="action_search">Search</string>
+
 </resources>
