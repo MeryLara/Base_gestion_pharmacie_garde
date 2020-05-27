@@ -47,11 +47,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#0040FF"
-        android:onClick="onAjouter"
+
         android:text="Ajouter"
+
+
         android:textColor="@color/white"
-
-
         android:textSize="14dp" />
 
     <TextView

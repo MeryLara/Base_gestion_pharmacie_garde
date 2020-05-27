@@ -161,16 +161,6 @@ public class MainActivity extends AppCompatActivity {
                         response.append(responseLine.trim());
                     }
 
-                    /*JSONObject jsonResponse = new JSONObject(response.toString());
-                    if(!jsonResponse.getBoolean("success")){
-                        System.out.println(jsonResponse.getString("message"));
-                    } else {
-                       /*txtmessg=findViewById(R.id.txtMessage);
-                        txtmessg.setText("enregistre ok");
-                        System.out.println("enregistre ok =======");
-
-                    }*/
-
                     return response.toString();
 
                 }
