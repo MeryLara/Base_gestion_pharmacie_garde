@@ -47,6 +47,9 @@ public class AddGarde extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_garde);
 
+        getSupportActionBar().setTitle("Ajouter pharmacie garde");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         buttonOk=(Button)findViewById(R.id.buttonOk);
         btnAjouter=(Button)findViewById(R.id.btnAjouter);
         btnScanner=(Button)findViewById(R.id.btnScanner);
@@ -72,7 +75,7 @@ public class AddGarde extends AppCompatActivity {
         btnScanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent add=new Intent(getApplicationContext(),Home.class);
+                Intent add=new Intent(getApplicationContext(),ScannerImage.class);
                 startActivity(add);
             }
         });

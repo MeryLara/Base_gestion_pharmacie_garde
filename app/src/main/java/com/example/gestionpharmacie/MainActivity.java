@@ -164,9 +164,6 @@ public class MainActivity extends AppCompatActivity {
                     return response.toString();
 
                 }
-
-
-
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {

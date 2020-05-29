@@ -61,6 +61,12 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        getSupportActionBar().setTitle("Home");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+
 //-------------------------------------------------------------------------------
        drawerLayout=(DrawerLayout) findViewById(R.id.draw);
         mToggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);

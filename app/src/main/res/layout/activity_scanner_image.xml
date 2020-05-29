@@ -1,58 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    android:layout_margin="10dp"
+    android:padding="20dp"
     tools:context=".ScannerImage">
 
-    <ImageView
-        android:id="@+id/image_back"
-        android:layout_width="146dp"
-        android:layout_height="127dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="245dp"
-        android:background="#ececec"
-        android:scaleType="center" />
 
-    <EditText
-        android:id="@+id/edtScanVille"
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Selectionner une image"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+
+        android:id="@+id/buttonChoose" />
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="26dp"
-        android:layout_marginBottom="522dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Ville"
+        android:layout_weight="1"
+        android:id="@+id/imageView"
+
+
         />
 
-    <Button
-        android:id="@+id/buttonLoadPicture"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/edtVille"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center"
-        android:layout_marginStart="14dp"
-        android:layout_marginBottom="399dp"
-        android:text="Load Picture"></Button>
+        android:ems="10"
+        android:hint="Saisir la ville"
+        android:inputType="textPersonName"
+        android:textSize="14dp" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="240dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="396dp"
-        android:text="Upload" />
+        android:text="Charger Image"
+        android:id="@+id/buttonUpload"
+        android:background="#4CAF50"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+
+        />
 
 
-</RelativeLayout>
+
+
+</LinearLayout>
