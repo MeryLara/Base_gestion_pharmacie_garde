@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -37,6 +39,8 @@ public class AddGarde extends AppCompatActivity {
     Button btnAjouter,btnScanner,buttonOk;
     AutoCompleteTextView nomPharmacie,ville,adresse;
 
+    TextView txtAjouterPharmacie;
+
     String selectedVille=null;
     String selectedPharma=null;
 
@@ -49,6 +53,16 @@ public class AddGarde extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Ajouter pharmacie garde");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        txtAjouterPharmacie=findViewById(R.id.txtAjouterPharmacie);
+        txtAjouterPharmacie.setText(Html.fromHtml("<p><u>Ajouter Pharmacie</u></p>"));
+        txtAjouterPharmacie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent add=new Intent(getApplicationContext(),AjouterPharmacie.class);
+                startActivity(add);
+            }
+        });
 
         buttonOk=(Button)findViewById(R.id.buttonOk);
         btnAjouter=(Button)findViewById(R.id.btnAjouter);

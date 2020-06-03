@@ -1,5 +1,6 @@
 package com.example.gestionpharmacie.metier;
 
+import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 public class Pharmacie {
@@ -8,7 +9,7 @@ public class Pharmacie {
     private String numTel;
     private String site;
     private String adresse;
-    private ImageView image;
+    private Bitmap image;
 
 
     public int getId_pharmacie() {
@@ -23,7 +24,7 @@ public class Pharmacie {
         return numTel;
     }
 
-    public ImageView getImage() {
+    public Bitmap getImage() {
         return image;
     }
 
@@ -48,7 +49,7 @@ public class Pharmacie {
         this.numTel = numTel;
     }
 
-    public void setImage(ImageView image) {
+    public void setImage(Bitmap image) {
         this.image = image;
     }
 
@@ -64,7 +65,7 @@ public class Pharmacie {
 
     }
 
-    public Pharmacie(int id_pharmacie, String nom_pharmacie, String numTel, ImageView image, String site, String adresse) {
+    public Pharmacie(int id_pharmacie, String nom_pharmacie, String numTel, Bitmap image, String site, String adresse) {
         this.id_pharmacie = id_pharmacie;
         this.nom_pharmacie = nom_pharmacie;
         this.numTel = numTel;
@@ -73,7 +74,7 @@ public class Pharmacie {
         this.adresse = adresse;
     }
 
-    public Pharmacie(String nom_pharmacie, String numTel, ImageView image, String site, String adresse) {
+    public Pharmacie(String nom_pharmacie, String numTel, Bitmap image, String site, String adresse) {
         this.nom_pharmacie = nom_pharmacie;
         this.numTel = numTel;
         this.image = image;

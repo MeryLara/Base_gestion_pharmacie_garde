@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:padding="20dp"
+    tools:context=".AjouterPharmacie">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edtPharmacie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Nom pharmacie"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/edtTel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Telephone"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/edtSite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Site"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/edtAdresse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Adresse"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/edtCodePostal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Code  Postal"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/edtVille"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Ville"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/edtPays"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Pays"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Selectionner une image"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+
+            android:id="@+id/buttonChoose" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/imgViewPharma"
+
+
+            />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="AJOUTER"
+            android:id="@+id/buttonUpload"
+            android:background="#4CAF50"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+
+            />
+
+
+
+
+
+    </LinearLayout>
+</LinearLayout>

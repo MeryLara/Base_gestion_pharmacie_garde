@@ -84,49 +84,5 @@ public class RequestHandler {
         return result.toString();
     }
 
-/*
-
-    @Override
-    protected String doInBackground(String... args) {
-        HashMap<String, String> postDataParams;
-        String action= "scanner";
-        String simage=args[0];
-        String sville = args[1];
-        String response="";
-        HashMap<String, String> postDataParams;
-
-        try {
-            URL url =new URL ("http://192.168.1.162/android/pharmacie/testws.php");
-            HttpURLConnection con=(HttpURLConnection)url.openConnection();
-            con.setRequestMethod("POST");
-            con.setRequestProperty("Content-Type","application/json; utf-8");
-            con.setRequestProperty("Accept","application/json");
-            con.setDoOutput(true);
-           // String postDataParams = "{\"action\": \""+action+"\",\"image\":\""+simage+"\", \"ville\": \""+sville+"\"}";
-
-
-            OutputStream os = con.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-            writer.write(getPostDataString(postDataParams));
-
-            int responseCode=con.getResponseCode();
-                if(responseCode==HttpURLConnection.HTTP_OK)
-                {
-                    BufferedReader br=new BufferedReader(new InputStreamReader(con.getInputStream()));
-                    response=br.readLine();
-                }
-                else
-                    {
-                    response="Error Registering";
-                }
-            }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-*/
 
 }

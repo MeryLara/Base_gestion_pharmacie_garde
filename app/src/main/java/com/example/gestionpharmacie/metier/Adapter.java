@@ -1,9 +1,11 @@
 package com.example.gestionpharmacie.metier;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gestionpharmacie.R;
+import com.example.gestionpharmacie.map.GoogleMapActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -21,6 +24,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.myViewHolser> {
 
     Context mcontext;
     List<Garde> gardes;
+    Button map;
 
 
     public Adapter(Context mcontext, List<Garde> gardes) {
@@ -47,6 +51,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.myViewHolser> {
         holder.txtAdress.setText(garde.getPharmacie().getAdresse());
         DateFormat shortDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         holder.txtDate.setText(shortDateFormat.format(garde.getDate()));
+        holder.imgPharma.setImageBitmap(garde.getPharmacie().getImage());
 
     }
     @Override
@@ -56,21 +61,23 @@ public class Adapter extends RecyclerView.Adapter<Adapter.myViewHolser> {
     }
     public class  myViewHolser extends RecyclerView.ViewHolder{
 
-        ImageView background_img;
+
         TextView txtNom;
         TextView txtSite;
         TextView txtTel;
         TextView txtAdress;
         TextView txtDate;
+        ImageView imgPharma;
 
         public myViewHolser(@NonNull View itemView) {
             super(itemView);
 
-            background_img=itemView.findViewById(R.id.image_back);
+
            txtNom= (TextView)itemView.findViewById(R.id.txtNomPharma);
             txtAdress= (TextView)itemView.findViewById(R.id.txtAdressPharma);
             txtSite= (TextView)itemView.findViewById(R.id.txtSitePharma);
             txtTel= (TextView)itemView.findViewById(R.id.txtTelPharma);
+            imgPharma= (ImageView) itemView.findViewById(R.id.image_back);
             txtDate= (TextView)itemView.findViewById(R.id.txtDate);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -79,6 +86,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.myViewHolser> {
                     Garde g=(Garde) v.getTag();
                     Toast.makeText(v.getContext(), g.getPharmacie().getNom_pharmacie()+""+g.getPharmacie().getNumTel()+""+g.getPharmacie().getSite()+""+g.getPharmacie().getAdresse()+""+g.getDate(), Toast.LENGTH_SHORT).show();
 
+                }
+            });
+
+            map=itemView.findViewById(R.id.btnMap);
+            map.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent add=new Intent(mcontext.getApplicationContext(), GoogleMapActivity.class);
+                    mcontext.startActivity(add);
                 }
             });
 

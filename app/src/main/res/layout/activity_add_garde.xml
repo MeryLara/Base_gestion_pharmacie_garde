@@ -55,11 +55,25 @@
         android:textSize="14dp" />
 
     <TextView
+        android:id="@+id/txtAjouterPharmacie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginRight="100dp"
+        android:fontFamily="sans-serif-medium"
+        android:linksClickable="true"
+        android:text="Ajouter pharmacie "
+        android:textColor="#2CA7E0"
+        android:textSize="12dp"
+
+        />
+
+    <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:textAlignment="center"
         android:text="or" />
 

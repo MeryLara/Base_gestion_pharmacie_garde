@@ -8,24 +8,32 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.example.gestionpharmacie.metier.Adapter;
 
 import com.example.gestionpharmacie.metier.Garde;
 import com.example.gestionpharmacie.metier.Pharmacie;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,21 +45,23 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static java.lang.String.valueOf;
+
 
 public class Home extends AppCompatActivity {
 
-    private DrawerLayout drawerLayout;
+    DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mToggle;
     private  RecyclerView recyclerView;
     RecyclerView.Adapter mAdapter;
+
+
     RecyclerView.LayoutManager layoutManager;
     List<Garde> gardes;
 
     //-----------------pop up
 
-    FloatingActionButton addGarde,map ;
-
-
+    FloatingActionButton addGarde ;
 
     RequestQueue rq;
     String req_url="http://192.168.1.162/android/pharmacie/listpharmacie.php";
@@ -65,14 +75,26 @@ public class Home extends AppCompatActivity {
         getSupportActionBar().setTitle("Home");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+//-------------------------------------------------------------------------------
+        NavigationView navigationView=findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(true);
+              //  drawerLayout.closeDrawer();
+                return true;
+            }
+        });
+
 
 
 //-------------------------------------------------------------------------------
+
        drawerLayout=(DrawerLayout) findViewById(R.id.draw);
+
         mToggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Window w=getWindow();
         w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
@@ -99,6 +121,7 @@ public class Home extends AppCompatActivity {
 
     }
 
+
     private void sendRequest() {
         JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.POST, req_url, null, new Response.Listener<JSONArray>() {
             @Override
@@ -113,14 +136,17 @@ public class Home extends AppCompatActivity {
                         pharma.setSite(jsonObject.getString("site"));
                         pharma.setAdresse(jsonObject.getString("adresse"));
 
-                        garde.setPharmacie(pharma);
-                        garde.getPharmacie().setNom_pharmacie(jsonObject.getString("nom_pharmacie"));
-                        garde.getPharmacie().setNumTel(jsonObject.getString("numTel"));
-                        garde.getPharmacie().setSite(jsonObject.getString("site"));
-                        garde.getPharmacie().setAdresse(jsonObject.getString("adresse"));
 
-                        Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(jsonObject.getString("date"));
-                        garde.setDate(date1);
+                        byte[] decodedString = Base64.decode(jsonObject.getString("image"), Base64.DEFAULT);
+                        Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                        pharma.setImage(decodedImage);
+
+                   //     pharma.setImage(jsonObject.get(valueOf(bmp1)));
+
+                        garde.setPharmacie(pharma);
+                        Date dateGarde=new SimpleDateFormat("yyyy-MM-dd").parse(jsonObject.getString("date"));
+                        garde.setDate(dateGarde);
 
                         System.out.println(garde.getPharmacie().getNom_pharmacie()+""+garde.getPharmacie().getNumTel()+""+garde.getPharmacie().getSite()+""+garde.getPharmacie().getAdresse());
                         System.out.println(garde.getDate());
@@ -142,7 +168,7 @@ public class Home extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("Volley Error :", String.valueOf(error));
+                Log.i("Volley Error :", valueOf(error));
             }
         });
         rq.add(jsonArrayRequest);
