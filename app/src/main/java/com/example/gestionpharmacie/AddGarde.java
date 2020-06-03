@@ -76,16 +76,10 @@ public class AddGarde extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EnregistreGarde();
-            }
-        });
-        findViewById(R.id.btnAjouter).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //calling this method to show our android custom alert dialog
                 showCustomDialog();
             }
         });
+
         btnScanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -312,7 +306,7 @@ class RecupererPharmacie extends AsyncTask<String, Integer, String>
         }
         @Override
         protected void onPostExecute(String s) {
-           Toast.makeText(AddGarde.this," pharmacie bien inserer",Toast.LENGTH_LONG).show();
+           Toast.makeText(AddGarde.this,s,Toast.LENGTH_LONG).show();
 
         }
 
