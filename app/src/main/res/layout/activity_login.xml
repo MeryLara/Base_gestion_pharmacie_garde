@@ -86,6 +86,7 @@
                 android:textColor="#2CA7E0"
                 android:textSize="15dp"
                 android:linksClickable="true"
+                android:id="@+id/txtSinscrire"
 
                 />
 

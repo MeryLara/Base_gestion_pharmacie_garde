@@ -29,7 +29,7 @@ import java.util.HashMap;
 public class Login extends AppCompatActivity {
 
     EditText edtuser,edtPass;
-    TextView txtMessageErreur;
+    TextView txtMessageErreur,txtSinscrire;
     Button btnLogin;
 
 
@@ -42,6 +42,16 @@ public class Login extends AppCompatActivity {
         edtuser=findViewById(R.id.edtusernameConnect);
         edtPass=findViewById(R.id.edtpasswordConnect);
         btnLogin=findViewById(R.id.btnConnect);
+        txtSinscrire=findViewById(R.id.txtSinscrire);
+
+
+        txtSinscrire.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -108,18 +118,6 @@ public class Login extends AppCompatActivity {
                     }
 
 
-                  /*  JSONObject jsonResponse = new JSONObject(response.toString());
-                    if(!jsonResponse.getBoolean("success")){
-                        txtMessageErreur=findViewById(R.id.txtMessageErreur);
-                        txtMessageErreur.setText("Utilisateur n'exist pas  ");
-
-
-                        System.out.println(jsonResponse.getString("message"));
-                    } else {
-                        System.out.println("login ok =======");
-                        Intent intent=new Intent(Login.this,Home.class);
-                        startActivity(intent);
-                    }*/
                     return response.toString();
 
                 }

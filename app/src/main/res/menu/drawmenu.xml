@@ -6,7 +6,7 @@
     <item android:id="@+id/pharmacieAproximit" android:title="Pharmacie a proximite" android:icon="@drawable/ic_medical"></item>
     <item android:id="@+id/hospitalAproximit" android:title="Hopital a proximite" android:icon="@drawable/ic_hospital"></item>
     <item android:id="@+id/notification" android:title="Notification" android:icon="@drawable/ic_notification"></item>
-    <item android:id="@+id/setting" android:title="Parametre" android:icon="@drawable/ic_settings"></item>
+    <item android:id="@+id/aide" android:title="Votre aide est la bienvenu" android:icon="@drawable/ic_question"></item>
     <item android:id="@+id/Deconnexion" android:title="Deconnexion" android:icon="@drawable/ic_signs"></item>
 
 

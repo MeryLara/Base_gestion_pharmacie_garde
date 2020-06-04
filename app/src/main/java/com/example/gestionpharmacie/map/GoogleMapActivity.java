@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentActivity;
 
@@ -18,12 +20,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.gestionpharmacie.Home;
 import com.example.gestionpharmacie.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -38,12 +42,13 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.navigation.NavigationView;
 
 import java.io.IOException;
 import java.util.List;
 
 
-public class GoogleMapActivity extends FragmentActivity implements  OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener ,NavigationView.OnNavigationItemSelectedListener{
 
     private GoogleMap mMap;
     private GoogleApiClient googleApiClient;
@@ -62,18 +67,25 @@ public class GoogleMapActivity extends FragmentActivity implements  OnMapReadyCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_google_map);
 
-     /*   drawerLayout=(DrawerLayout) findViewById(R.id.draw);
+
+
+
+
+        // NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+          // navigationView.setNavigationItemSelectedListener(this);
+
+
+       drawerLayout=(DrawerLayout) findViewById(R.id.draw);
         mToggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         //set the status bar background to transparent
 
-       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+       Window w=getWindow();
+     w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        Window w=getWindow();
-        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-*/
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
@@ -85,6 +97,10 @@ public class GoogleMapActivity extends FragmentActivity implements  OnMapReadyCa
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+
+
     }
 
 
@@ -98,7 +114,7 @@ public class GoogleMapActivity extends FragmentActivity implements  OnMapReadyCa
 
         switch (v.getId())
         {
-           /* case R.id.search_adresse:
+           case R.id.search_adresse:
                 EditText addressField = (EditText) findViewById(R.id.location_search);
                 String address = addressField.getText().toString();
 
@@ -151,7 +167,7 @@ public class GoogleMapActivity extends FragmentActivity implements  OnMapReadyCa
                     Toast.makeText(this, "please write any location name...", Toast.LENGTH_SHORT).show();
                 }
                 break;
-*/
+
 
             case R.id.hospitalAproximit:
                 mMap.clear();
@@ -164,7 +180,7 @@ public class GoogleMapActivity extends FragmentActivity implements  OnMapReadyCa
                 Toast.makeText(this, "Showing Nearby Hospitals...", Toast.LENGTH_SHORT).show();
                 break;
 
-            case R.id.schools_nearby:
+       /*     case R.id.schools_nearby:
                 mMap.clear();
                 url = getUrl(latitide, longitude, school);
                 transferData[0] = mMap;
@@ -173,10 +189,10 @@ public class GoogleMapActivity extends FragmentActivity implements  OnMapReadyCa
                 getNearbyPlaces.execute(transferData);
                 Toast.makeText(this, "Searching for Nearby Schools...", Toast.LENGTH_SHORT).show();
                 Toast.makeText(this, "Showing Nearby Schools...", Toast.LENGTH_SHORT).show();
-                break;
+                break;*/
 
 
-            case R.id.restaurants_nearby:
+         /*   case R.id.restaurants_nearby:
                 mMap.clear();
                 url = getUrl(latitide, longitude, restaurant);
                 transferData[0] = mMap;
@@ -185,7 +201,7 @@ public class GoogleMapActivity extends FragmentActivity implements  OnMapReadyCa
                 getNearbyPlaces.execute(transferData);
                 Toast.makeText(this, "Searching for Nearby Restaurants...", Toast.LENGTH_SHORT).show();
                 Toast.makeText(this, "Showing Nearby Restaurants...", Toast.LENGTH_SHORT).show();
-                break;
+                break;*/
         }
     }
 
@@ -339,5 +355,25 @@ public class GoogleMapActivity extends FragmentActivity implements  OnMapReadyCa
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (mToggle.onOptionsItemSelected(item)){
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        if(id == R.id. inbox){
+            //Handle your stuff here
+            Toast.makeText(GoogleMapActivity.this, "ttttttttttttttttttttttttttttttttttttt", Toast.LENGTH_SHORT).show();
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

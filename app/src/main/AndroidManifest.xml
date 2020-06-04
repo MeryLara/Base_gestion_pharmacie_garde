@@ -16,7 +16,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AjouterPharmacie"></activity>
+        <activity android:name=".ListeImage"></activity>
+        <activity android:name=".Home">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".AjouterPharmacie" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -29,25 +37,18 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".Activity_map" />
         <activity
             android:name=".ScannerImage"
             android:parentActivityName=".Home" />
-        <activity android:name=".map.GoogleMapActivity" />
+        <activity
+            android:name=".map.GoogleMapActivity"
+            android:parentActivityName=".Home" />
         <activity
             android:name=".AddGarde"
             android:parentActivityName=".Home" />
-        <activity
-            android:name=".MainActivity"
-            android:parentActivityName=".ScannerImage" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".Login" />
-        <activity android:name=".Home">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".SplashScrene"></activity>
     </application>
 
 </manifest>

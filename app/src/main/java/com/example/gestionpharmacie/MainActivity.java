@@ -51,21 +51,15 @@ public class MainActivity extends AppCompatActivity {
                 R.array.planets_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
+        // Apply the adapter to the spinner
         snptype.setAdapter(adapter);
-
-
-
 
         username=findViewById(R.id.edtusername);
         nom = findViewById(R.id.edtNom);
         prenom = findViewById(R.id.edtprenom);
         email = findViewById(R.id.edtemail);
         password = findViewById(R.id.edtpass);
-
-
         tel = findViewById(R.id.edtTel);
-
         b1 = findViewById(R.id.btnEnreg);
         btnLogEnreg = findViewById(R.id.btnLoginEnreg);
         btnLogEnreg.setOnClickListener(new View.OnClickListener() {
@@ -75,10 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
-
 
     public void Onregister(View v) {
 

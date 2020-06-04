@@ -9,8 +9,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -32,76 +29,47 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-
-import com.example.gestionpharmacie.map.GoogleMapActivity;
-import com.example.gestionpharmacie.metier.Adapter;
-
+import com.example.gestionpharmacie.metier.AdapterListeImage;
 import com.example.gestionpharmacie.metier.Garde;
-import com.example.gestionpharmacie.metier.Pharmacie;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.gestionpharmacie.metier.ImageCapture;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-import java.util.Date;
 import java.util.List;
 
 import static java.lang.String.valueOf;
 
-
-public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class ListeImage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mToggle;
-    private  RecyclerView recyclerView;
+    private RecyclerView recyclerView;
     RecyclerView.Adapter mAdapter;
 
 
     RecyclerView.LayoutManager layoutManager;
-    List<Garde> gardes;
-
-    //-----------------pop up
-
-    FloatingActionButton addGarde ;
+    List<ImageCapture> images;
 
     RequestQueue rq;
-    String req_url="http://192.168.1.162/android/pharmacie/listpharmacie.php";
+    String req_url="http://192.168.1.162/android/pharmacie/listeImage.php";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_liste_image);
 
-        getSupportActionBar().setTitle("Home");
+        getSupportActionBar().setTitle("Image capture");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-//-------------------------------------------------------------------------------
-      /*
-        NavigationView navigationView=findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                item.setChecked(true);
-              //  drawerLayout.closeDrawer();
-                return true;
-            }
-        });*/
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
-
-//-------------------------------------------------------------------------------
-
-       drawerLayout=(DrawerLayout) findViewById(R.id.draw);
+        drawerLayout=(DrawerLayout) findViewById(R.id.draw);
 
         mToggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(mToggle);
@@ -109,71 +77,42 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         Window w=getWindow();
         w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-
-//-----------------------------------------------------------------------------------
         rq= Volley.newRequestQueue(this);
-        recyclerView=(RecyclerView)findViewById(R.id.recycleViewContainer);
+        recyclerView=(RecyclerView)findViewById(R.id.recycleViewImage);
         recyclerView.setHasFixedSize(true);
         layoutManager =new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-      //  pharmacies=new ArrayList<>();
-        gardes=new ArrayList<>();
+        //  pharmacies=new ArrayList<>();
+        images=new ArrayList<>();
         sendRequest();
-
-//--------------------------------------------- pop up-------------------------------------
-       addGarde=(FloatingActionButton)findViewById(R.id.btnAjoutGarde);
-       addGarde.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               Intent add=new Intent(getApplicationContext(),AddGarde.class);
-               startActivity(add);
-           }
-       });
-
-
-
-
     }
-
 
     private void sendRequest() {
         JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.POST, req_url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 for (int i = 0; i < response.length(); i++) {
-                    Pharmacie pharma = new Pharmacie();
-                    Garde garde=new Garde();
+                    ImageCapture image = new ImageCapture();
                     try {
                         JSONObject jsonObject = response.getJSONObject(i);
-                       pharma.setNom_pharmacie(jsonObject.getString("nom_pharmacie"));
-                        pharma.setNumTel(jsonObject.getString("numTel"));
-                        pharma.setSite(jsonObject.getString("site"));
-                        pharma.setAdresse(jsonObject.getString("adresse"));
+                        image.setVille(jsonObject.getString("ville"));
+                        image.setId_image(jsonObject.getInt("id_image"));
 
-                        byte[] decodedString = Base64.decode(jsonObject.getString("image"), Base64.DEFAULT);
+
+                        byte[] decodedString = Base64.decode(jsonObject.getString("imageGarde"), Base64.DEFAULT);
                         Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                        pharma.setImage(decodedImage);
+                        image.setImage(decodedImage);
 
-                   //     pharma.setImage(jsonObject.get(valueOf(bmp1)));
 
-                        garde.setPharmacie(pharma);
-                        Date dateGarde=new SimpleDateFormat("yyyy-MM-dd").parse(jsonObject.getString("date"));
-                        garde.setDate(dateGarde);
-
-                        System.out.println(garde.getPharmacie().getNom_pharmacie()+""+garde.getPharmacie().getNumTel()+""+garde.getPharmacie().getSite()+""+garde.getPharmacie().getAdresse());
-                        System.out.println(garde.getDate());
-                        System.out.println("-----------------------------------------");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }catch (Exception ee){
                         ee.printStackTrace();
 
                     }
-                   // pharmacies.add(pharma);
-                    gardes.add(garde);
+                    images.add(image);
                 }
-               // mAdapter = new Adapter(Home.this, pharmacies);
-                mAdapter = new Adapter(Home.this, gardes);
+                mAdapter=new AdapterListeImage(ListeImage.this,images);
                 recyclerView.setAdapter(mAdapter);
 
             }
@@ -185,6 +124,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         });
         rq.add(jsonArrayRequest);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -198,29 +138,30 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
-        GoogleMapActivity googlMap=new GoogleMapActivity();
+
         int id = item.getItemId();
         if(id == R.id. inbox){
-            //Handle your stuff here
-            Toast.makeText(Home.this, "ttttttttttttttttttttttttttttttttttttt", Toast.LENGTH_SHORT).show();
+            Intent add=new Intent(getApplicationContext(),Home.class);
+            startActivity(add);
         }
         if(id == R.id. pharmacieGarde){
             //Handle your stuff here
-            Toast.makeText(Home.this, "ttttttttttttttttttttttttttttttttttttt", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ListeImage.this, "ttttttttttttttttttttttttttttttttttttt", Toast.LENGTH_SHORT).show();
         }
         if(id==R.id.pharmacieAproximit){
-            Intent add=new Intent(getApplicationContext(),GoogleMapActivity.class);
-            startActivity(add);
+          //  Intent add=new Intent(getApplicationContext(),GoogleMapActivity.class);
+            //startActivity(add);
         }
 
         if(id==R.id.hospitalAproximit){
-            Intent add=new Intent(getApplicationContext(),GoogleMapActivity.class);
-            startActivity(add);
+           // Intent add=new Intent(getApplicationContext(),GoogleMapActivity.class);
+            //startActivity(add);
 
         }
         if(id==R.id.notification){
-            Intent add=new Intent(getApplicationContext(),ListeImage.class);
+            Intent add=new Intent(getApplicationContext(),Home.class);
             startActivity(add);
+
         }
         if(id==R.id.aide){
             showCustomDialog();
@@ -240,9 +181,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-    public void onClick(View v) {
-        Intent intent=new Intent(getApplicationContext(),Home.class);
-        startActivity(intent);
-    }
-}
 
+
+}

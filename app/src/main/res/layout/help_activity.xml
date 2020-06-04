@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_help_black_24dp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nous aider"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:text="Bienvenue dans l'pplication GardePharmacy :Nous avons pour objectif d'etre l'application qui fournit les pharmacies de garde pour toutes les villes."
+            android:textAlignment="inherit"
+            android:textSize="14dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:text="Si votre ville ne figure pas dans la liste des villes et si vous pouvez nous fournir les pharmacies de garde de votre ville on vous serait trés reconnaissant."
+            android:textAlignment="inherit"
+            android:textSize="14dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:text="Pour plus d'informations veuillez nous contacter: mariam.Amchayd@gmail.com."
+            android:textAlignment="inherit"
+            android:textSize="14dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:text="Nous vous remercions de votre aide.Nous vous souhaitons une bonne santé.Merci"
+            android:textAlignment="inherit"
+            android:textSize="14dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+
+
+        <Button
+            android:id="@+id/buttonOk"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/button_background"
+            android:onClick="onClick"
+            android:text="Ok"
+            android:textColor="@color/colorPrimary" />
+
+    </LinearLayout>
+
+</LinearLayout>

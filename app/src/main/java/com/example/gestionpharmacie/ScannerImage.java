@@ -45,7 +45,7 @@ public class ScannerImage extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_scanner_image);
 
         getSupportActionBar().setTitle("Scanner image");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
 
