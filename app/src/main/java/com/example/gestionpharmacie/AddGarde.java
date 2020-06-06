@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -51,6 +52,16 @@ public class AddGarde extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_garde);
 
+        SharedPreferences prefs = getSharedPreferences ("type_user_prefs",MODE_PRIVATE);
+        String userType = prefs.getString("userType","user");
+        Boolean login=prefs.getBoolean("login",false);
+
+        if(!login){
+            Intent add=new Intent(getApplicationContext(),Login.class);
+            startActivity(add);
+
+        }
+
         getSupportActionBar().setTitle("Ajouter pharmacie garde");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -64,6 +75,13 @@ public class AddGarde extends AppCompatActivity {
             }
         });
 
+
+     /*   SharedPreferences prefs = getSharedPreferences ("type_user_prefs",MODE_PRIVATE);
+        String userType = prefs.getString("userType","user");
+
+        if(userType.equals("user")) {
+            txtAjouterPharmacie.setVisibility(View.GONE);
+        }*/
         buttonOk=(Button)findViewById(R.id.buttonOk);
         btnAjouter=(Button)findViewById(R.id.btnAjouter);
         btnScanner=(Button)findViewById(R.id.btnScanner);

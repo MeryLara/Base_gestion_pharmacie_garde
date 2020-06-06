@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.gestionpharmacie.map.GoogleMapActivity;
 import com.example.gestionpharmacie.metier.AdapterListeImage;
 import com.example.gestionpharmacie.metier.Garde;
 import com.example.gestionpharmacie.metier.ImageCapture;
@@ -62,6 +64,16 @@ public class ListeImage extends AppCompatActivity implements NavigationView.OnNa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liste_image);
+
+        SharedPreferences prefs = getSharedPreferences ("type_user_prefs",MODE_PRIVATE);
+        String userType = prefs.getString("userType","user");
+        Boolean login=prefs.getBoolean("login",false);
+
+        if(!login){
+            Intent add=new Intent(getApplicationContext(),Login.class);
+            startActivity(add);
+
+        }
 
         getSupportActionBar().setTitle("Image capture");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -140,28 +152,33 @@ public class ListeImage extends AppCompatActivity implements NavigationView.OnNa
         // Handle navigation view item clicks here.
 
         int id = item.getItemId();
-        if(id == R.id. inbox){
-            Intent add=new Intent(getApplicationContext(),Home.class);
-            startActivity(add);
+        if(id == R.id.ajouPharGarde){
+            Intent intent=new Intent(getApplicationContext(),AddGarde.class);
+            startActivity(intent);
         }
-        if(id == R.id. pharmacieGarde){
-            //Handle your stuff here
-            Toast.makeText(ListeImage.this, "ttttttttttttttttttttttttttttttttttttt", Toast.LENGTH_SHORT).show();
+        if(id == R.id.ajouPhar){
+            Intent intent=new Intent(getApplicationContext(),AjouterPharmacie.class);
+            startActivity(intent);
+        }
+        if(id == R.id.pharmacieGarde){
+            Intent intent=new Intent(getApplicationContext(),Home.class);
+            startActivity(intent);
         }
         if(id==R.id.pharmacieAproximit){
-          //  Intent add=new Intent(getApplicationContext(),GoogleMapActivity.class);
-            //startActivity(add);
+            Intent intent=new Intent(getApplicationContext(), GoogleMapActivity.class);
+            String pharma="pharmacy";
+            intent.putExtra("param",pharma);
+            startActivity(intent);
         }
-
         if(id==R.id.hospitalAproximit){
-           // Intent add=new Intent(getApplicationContext(),GoogleMapActivity.class);
-            //startActivity(add);
-
+            Intent intent=new Intent(getApplicationContext(),GoogleMapActivity.class);
+            String hopital="hospital";
+            intent.putExtra("param",hopital);
+            startActivity(intent);
         }
         if(id==R.id.notification){
-            Intent add=new Intent(getApplicationContext(),Home.class);
+            Intent add=new Intent(getApplicationContext(),ListeImage.class);
             startActivity(add);
-
         }
         if(id==R.id.aide){
             showCustomDialog();

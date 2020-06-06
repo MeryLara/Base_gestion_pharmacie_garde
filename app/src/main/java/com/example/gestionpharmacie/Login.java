@@ -3,6 +3,7 @@ package com.example.gestionpharmacie;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,19 +32,17 @@ public class Login extends AppCompatActivity {
     EditText edtuser,edtPass;
     TextView txtMessageErreur,txtSinscrire;
     Button btnLogin;
-
+    String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
         edtuser=findViewById(R.id.edtusernameConnect);
         edtPass=findViewById(R.id.edtpasswordConnect);
         btnLogin=findViewById(R.id.btnConnect);
         txtSinscrire=findViewById(R.id.txtSinscrire);
-
 
         txtSinscrire.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +54,6 @@ public class Login extends AppCompatActivity {
 
     }
 
-
     public void OnrConnect(View v) {
 
         String suser=edtuser.getText().toString();
@@ -63,7 +61,6 @@ public class Login extends AppCompatActivity {
         if(suser.matches("")){
             //edtuser.setBackgroundColor(Color.MAGENTA);
             Toast.makeText(Login.this, "le champs username est vide ",Toast.LENGTH_SHORT).show();
-
 
         }else  if(pass.matches("")){
 
@@ -73,14 +70,10 @@ public class Login extends AppCompatActivity {
             Login.connect connecter=new Login.connect();
             connecter.execute(suser,pass);
         }
-
-
     }
-
 
     class connect extends AsyncTask<String, Integer, String> {
         HashMap<String, String> postDataParams;
-
 
         @Override
         protected String doInBackground(String... args) {
@@ -88,10 +81,8 @@ public class Login extends AppCompatActivity {
             String action= "login";
             String user = args[0];
             String pass = args[1];
-            System.out.println(user);
-            System.out.println(pass);
-
-
+           // System.out.println(user);
+            //System.out.println(pass);
 
             try {
                 URL url =new URL ("http://192.168.1.162/android/pharmacie/compte.php");
@@ -102,13 +93,12 @@ public class Login extends AppCompatActivity {
                 con.setDoOutput(true);
                 String jsonInputString = "{\"action\": \""+action+"\", \"username\": \""+user+"\",\"password\" : \""+pass+"\"}";
 
-
-                System.out.println(jsonInputString);
+               // System.out.println("testest"+jsonInputString);
+                System.out.println();
                 try(OutputStream os = con.getOutputStream()) {
                     byte[] input = jsonInputString.getBytes("utf-8");
                     os.write(input, 0, input.length);
                 }
-
                 try(BufferedReader br = new BufferedReader(
                         new InputStreamReader(con.getInputStream(), "utf-8"))) {
                     StringBuilder response = new StringBuilder();
@@ -117,50 +107,47 @@ public class Login extends AppCompatActivity {
                         response.append(responseLine.trim());
                     }
 
+                    JSONObject jsonObject=new JSONObject(response.toString());
+                     System.out.println("test test test test"+jsonObject.getString("type"));
+                    SharedPreferences.Editor prefsEditor = getSharedPreferences ("type_user_prefs",MODE_PRIVATE).edit();
+                    prefsEditor.putString("userType",jsonObject.getString("type"));
+                    prefsEditor.putBoolean("login",true);
+                    prefsEditor.apply();
+
+
+
+
 
                     return response.toString();
-
                 }
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
+            }catch (JSONException e) {
+                e.printStackTrace();
             }
               return null;
-
         }
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
         }
-
         @Override
         protected void onPostExecute(String s) {
             txtMessageErreur=findViewById(R.id.txtMessageErreur);
             try {
                 JSONObject jsonResponse = new JSONObject(s);
                 if(!jsonResponse.getBoolean("success")){
-
                     txtMessageErreur.setText(" Utilisateur n'exist pas !!! ");
-
-
                 } else {
                     Intent intent=new Intent(Login.this,Home.class);
                     startActivity(intent);
-
-                   
-
                 }
             }catch (JSONException e){
                 e.getStackTrace();
             }
-
         }
-
-
         }
-
     }

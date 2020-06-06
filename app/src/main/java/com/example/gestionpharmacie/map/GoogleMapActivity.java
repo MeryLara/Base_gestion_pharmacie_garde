@@ -12,6 +12,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -28,6 +30,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.gestionpharmacie.Home;
+import com.example.gestionpharmacie.Login;
 import com.example.gestionpharmacie.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -48,7 +51,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener ,NavigationView.OnNavigationItemSelectedListener{
+public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener,NavigationView.OnNavigationItemSelectedListener {
 
     private GoogleMap mMap;
     private GoogleApiClient googleApiClient;
@@ -61,56 +64,54 @@ public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyC
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mToggle;
+    private String placeType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_google_map);
 
+        SharedPreferences prefs = getSharedPreferences ("type_user_prefs",MODE_PRIVATE);
+        String userType = prefs.getString("userType","user");
+        Boolean login=prefs.getBoolean("login",false);
 
+        if(!login){
+            Intent add=new Intent(getApplicationContext(), Login.class);
+            startActivity(add);
 
+        }
 
+        Intent intent=getIntent();
+        placeType=intent.getStringExtra("param");
+        getSupportActionBar().setTitle(placeType);
 
-        // NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-          // navigationView.setNavigationItemSelectedListener(this);
-
-
-       drawerLayout=(DrawerLayout) findViewById(R.id.draw);
-        mToggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);
-        drawerLayout.addDrawerListener(mToggle);
-        mToggle.syncState();
-        //set the status bar background to transparent
-
-      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-       Window w=getWindow();
-     w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-
+        String activityTitle = "";
+        if(placeType.equals("pharmacy")) {
+            activityTitle = "Pharmacies les plus proches";
+        } else if(placeType.equals("hospital")){
+            activityTitle = "hôpitaux les plus proches ";
+        } else {
+            activityTitle = "Map";
+        }
+        getSupportActionBar().setTitle(activityTitle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
             checkUserLocationPermission();
         }
 
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
-
-
     }
-
-
 
     public void onClick(View v)
     {
-        String hospital = "hospital", school = "pharmacy", restaurant = "restaurant";
         Object transferData[] = new Object[2];
         GetNearbyPlaces getNearbyPlaces = new GetNearbyPlaces();
-
 
         switch (v.getId())
         {
@@ -124,7 +125,6 @@ public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyC
                 if (!TextUtils.isEmpty(address))
                 {
                     Geocoder geocoder = new Geocoder(this);
-
                     try
                     {
                         addressList = geocoder.getFromLocationName(address, 6);
@@ -142,14 +142,16 @@ public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyC
                                 mMap.addMarker(userMarkerOptions);
                                 mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                                 mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
-
                                 // a
+
                                 mMap.clear();
-                                String url = getUrl(userAddress.getLatitude(), userAddress.getLongitude(), hospital);
+                                String url = getUrl(userAddress.getLatitude(), userAddress.getLongitude(), placeType);
                                 transferData[0] = mMap;
                                 transferData[1] = url;
-
                                 getNearbyPlaces.execute(transferData);
+
+
+
                                 }
                         }
                         else
@@ -169,39 +171,6 @@ public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyC
                 break;
 
 
-            case R.id.hospitalAproximit:
-                mMap.clear();
-                String url = getUrl(latitide, longitude, hospital);
-                transferData[0] = mMap;
-                transferData[1] = url;
-
-                getNearbyPlaces.execute(transferData);
-                Toast.makeText(this, "Searching for Nearby Hospitals...", Toast.LENGTH_SHORT).show();
-                Toast.makeText(this, "Showing Nearby Hospitals...", Toast.LENGTH_SHORT).show();
-                break;
-
-       /*     case R.id.schools_nearby:
-                mMap.clear();
-                url = getUrl(latitide, longitude, school);
-                transferData[0] = mMap;
-                transferData[1] = url;
-
-                getNearbyPlaces.execute(transferData);
-                Toast.makeText(this, "Searching for Nearby Schools...", Toast.LENGTH_SHORT).show();
-                Toast.makeText(this, "Showing Nearby Schools...", Toast.LENGTH_SHORT).show();
-                break;*/
-
-
-         /*   case R.id.restaurants_nearby:
-                mMap.clear();
-                url = getUrl(latitide, longitude, restaurant);
-                transferData[0] = mMap;
-                transferData[1] = url;
-
-                getNearbyPlaces.execute(transferData);
-                Toast.makeText(this, "Searching for Nearby Restaurants...", Toast.LENGTH_SHORT).show();
-                Toast.makeText(this, "Showing Nearby Restaurants...", Toast.LENGTH_SHORT).show();
-                break;*/
         }
     }
 
@@ -221,7 +190,6 @@ public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyC
         return googleURL.toString();
     }
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -229,13 +197,13 @@ public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyC
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
         {
             buildGoogleApiClient();
+            Toast.makeText(getApplicationContext(), "my location", Toast.LENGTH_SHORT).show();
+
 
             mMap.setMyLocationEnabled(true);
+
         }
-
     }
-
-
 
     public boolean checkUserLocationPermission()
     {
@@ -256,8 +224,6 @@ public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyC
             return true;
         }
     }
-
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
@@ -284,9 +250,6 @@ public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyC
         }
     }
 
-
-
-
     protected synchronized void buildGoogleApiClient()
     {
         googleApiClient = new GoogleApiClient.Builder(this)
@@ -298,10 +261,13 @@ public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyC
         googleApiClient.connect();
     }
 
-
     @Override
     public void onLocationChanged(Location location)
     {
+        Object transferData[] = new Object[2];
+        GetNearbyPlaces getNearbyPlaces = new GetNearbyPlaces();
+
+
         latitide = location.getLatitude();
         longitude = location.getLongitude();
 
@@ -324,12 +290,24 @@ public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyC
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomBy(12));
 
+
+        mMap.clear();
+        String url = getUrl(latitide, longitude, placeType);
+        transferData[0] = mMap;
+        transferData[1] = url;
+        getNearbyPlaces.execute(transferData);
+
+
         if (googleApiClient != null)
         {
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
         }
-    }
 
+
+
+
+
+    }
 
     @Override
     public void onConnected(@Nullable Bundle bundle)
@@ -352,28 +330,25 @@ public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyC
 
     }
 
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.draw);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (mToggle.onOptionsItemSelected(item)){
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-        if(id == R.id. inbox){
-            //Handle your stuff here
-            Toast.makeText(GoogleMapActivity.this, "ttttttttttttttttttttttttttttttttttttt", Toast.LENGTH_SHORT).show();
-        }
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        return false;
     }
 }

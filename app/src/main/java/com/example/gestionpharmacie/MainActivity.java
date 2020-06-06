@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -43,6 +44,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SharedPreferences prefs = getSharedPreferences ("type_user_prefs",MODE_PRIVATE);
+        String userType = prefs.getString("userType","user");
+        Boolean login=prefs.getBoolean("login",false);
+
+        if(!login){
+            Intent add=new Intent(getApplicationContext(),Login.class);
+            startActivity(add);
+
+        }
 
         // Spinner element
         snptype = (Spinner) findViewById(R.id.spinner);

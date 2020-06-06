@@ -93,8 +93,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.myViewHolser> {
             map.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent add=new Intent(mcontext.getApplicationContext(), GoogleMapActivity.class);
-                    mcontext.startActivity(add);
+                    Intent intent=new Intent(mcontext.getApplicationContext(), GoogleMapActivity.class);
+                    String pharma="pharmacy";
+                    intent.putExtra("param",pharma);
+                    mcontext.startActivity(intent);
+
+
+
+
                 }
             });
 

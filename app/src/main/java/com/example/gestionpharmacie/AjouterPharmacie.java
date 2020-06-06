@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -54,6 +55,17 @@ public class AjouterPharmacie extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajouter_pharmacie);
+
+
+        SharedPreferences prefs = getSharedPreferences ("type_user_prefs",MODE_PRIVATE);
+        String userType = prefs.getString("userType","user");
+        Boolean login=prefs.getBoolean("login",false);
+
+        if(!login){
+            Intent add=new Intent(getApplicationContext(),Login.class);
+            startActivity(add);
+
+        }
 
         getSupportActionBar().setTitle("Ajouter Pharmacie");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

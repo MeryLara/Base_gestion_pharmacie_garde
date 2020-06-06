@@ -16,14 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ListeImage"></activity>
-        <activity android:name=".Home">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".ListeImage" />
+        <activity android:name=".Home"></activity>
         <activity android:name=".AjouterPharmacie" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -47,8 +41,14 @@
             android:name=".AddGarde"
             android:parentActivityName=".Home" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".Login" />
-        <activity android:name=".SplashScrene"></activity>
+        <activity android:name=".Login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".SplashScrene" />
     </application>
 
 </manifest>

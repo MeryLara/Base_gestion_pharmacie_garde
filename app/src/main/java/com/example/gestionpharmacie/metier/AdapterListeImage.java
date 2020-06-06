@@ -1,6 +1,7 @@
 package com.example.gestionpharmacie.metier;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
@@ -12,21 +13,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gestionpharmacie.AddGarde;
-import com.example.gestionpharmacie.AjouterPharmacie;
-import com.example.gestionpharmacie.ListeImage;
 import com.example.gestionpharmacie.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.List;
 
@@ -77,7 +75,7 @@ public class AdapterListeImage extends RecyclerView.Adapter<AdapterListeImage.my
         ImageView imggarde;
         Button btnrefuser,btnapprouver;
 
-        public myListViewHolser(@NonNull View itemView) {
+        public myListViewHolser(@NonNull final View itemView) {
             super(itemView);
 
             txtVille= (TextView)itemView.findViewById(R.id.txtVillePharmaGarde);
@@ -86,24 +84,59 @@ public class AdapterListeImage extends RecyclerView.Adapter<AdapterListeImage.my
             btnapprouver=itemView.findViewById(R.id.btnApprouver);
 
 
-            /*itemView.setOnClickListener(new View.OnClickListener() {
+           /* itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     ImageCapture img= (ImageCapture) v.getTag();
-                    System.out.println((ImageCapture) v.getTag());
-                    //Toast.makeText(v.getContext(),img.getId_image(), Toast.LENGTH_SHORT).show();
-
+                    // System.out.println((ImageCapture) v.getTag());
+                    Toast.makeText(v.getContext(),img.getId_image(), Toast.LENGTH_SHORT).show();
+                  //  AlertDialog.Builder builder=new AlertDialog.Builder(mcontext.getApplicationContext());
+                  //  ImageView im=new ImageView(mcontext.getApplicationContext());
+                //    builder.setView(v);
+                //    builder.create().show();
                 }
-            });*/
+            });
+
+            */
 
             btnrefuser.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(final View v) {
 
-                    int captureImageId= (int) v.getTag();
+                /*    AlertDialog.Builder dialog = new AlertDialog.Builder(mcontext.getApplicationContext());
+                    dialog.setTitle("Refuser");
+                    dialog.setMessage("vous voulez vraiment supprimer cette information de pharmacies de garde ?");
+                    dialog.setCancelable(true);
+                    dialog.setPositiveButton(
+                            "Yes",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int
+                                        id) {
+                                    int captureImageId= (int) v.getTag();
+                                    System.out.println(captureImageId);
+                                    DeleteImage deleteImage=new DeleteImage();
+                                    deleteImage.execute(captureImageId);
+
+                                }
+                            });
+                    dialog.setNegativeButton(
+                            "No",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User cancelled the dialog
+                                    dialog.cancel();
+                                }
+                            });
+
+
+                    AlertDialog alert = dialog.create();
+                    alert.show();*/
+
+                      int captureImageId= (int) v.getTag();
                     System.out.println(captureImageId);
                     DeleteImage deleteImage=new DeleteImage();
                     deleteImage.execute(captureImageId);
+                    Toast.makeText(mcontext.getApplicationContext(),"Ces information sont bien supprimer", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -166,6 +199,7 @@ public class AdapterListeImage extends RecyclerView.Adapter<AdapterListeImage.my
             System.out.println(s);
         }
     }
+
 
 }
 

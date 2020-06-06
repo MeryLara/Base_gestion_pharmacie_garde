@@ -12,12 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,31 +71,38 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
     FloatingActionButton addGarde ;
 
+    NavigationView navigationView;
+
     RequestQueue rq;
     String req_url="http://192.168.1.162/android/pharmacie/listpharmacie.php";
-
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        getSupportActionBar().setTitle("Home");
+        getSupportActionBar().setTitle("Pharmacies Garde");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//-------------------------------------------------------------------------------
-      /*
-        NavigationView navigationView=findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                item.setChecked(true);
-              //  drawerLayout.closeDrawer();
-                return true;
-            }
-        });*/
+        SharedPreferences prefs = getSharedPreferences ("type_user_prefs",MODE_PRIVATE);
+        String userType = prefs.getString("userType","user");
+        Boolean login=prefs.getBoolean("login",false);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        if(!login){
+            Intent add=new Intent(getApplicationContext(),Login.class);
+            startActivity(add);
+
+        }
+        if(userType.equals("user")) {
+            hideItemsForUser();
+        }
+
+
+
+
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -133,8 +142,16 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
 
 
+
     }
 
+    private void hideItemsForUser()
+    {
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        Menu nav_Menu = navigationView.getMenu();
+        nav_Menu.findItem(R.id.ajouPhar).setVisible(false);
+        nav_Menu.findItem(R.id.notification).setVisible(false);
+    }
 
     private void sendRequest() {
         JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.POST, req_url, null, new Response.Listener<JSONArray>() {
@@ -200,23 +217,29 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         // Handle navigation view item clicks here.
         GoogleMapActivity googlMap=new GoogleMapActivity();
         int id = item.getItemId();
-        if(id == R.id. inbox){
-            //Handle your stuff here
-            Toast.makeText(Home.this, "ttttttttttttttttttttttttttttttttttttt", Toast.LENGTH_SHORT).show();
+        if(id == R.id.ajouPharGarde){
+            Intent intent=new Intent(getApplicationContext(),AddGarde.class);
+            startActivity(intent);
         }
-        if(id == R.id. pharmacieGarde){
-            //Handle your stuff here
-            Toast.makeText(Home.this, "ttttttttttttttttttttttttttttttttttttt", Toast.LENGTH_SHORT).show();
+        if(id == R.id.ajouPhar){
+            Intent intent=new Intent(getApplicationContext(),AjouterPharmacie.class);
+            startActivity(intent);
+        }
+        if(id == R.id.pharmacieGarde){
+            Intent intent=new Intent(getApplicationContext(),Home.class);
+            startActivity(intent);
         }
         if(id==R.id.pharmacieAproximit){
-            Intent add=new Intent(getApplicationContext(),GoogleMapActivity.class);
-            startActivity(add);
+            Intent intent=new Intent(getApplicationContext(),GoogleMapActivity.class);
+            String pharma="pharmacy";
+            intent.putExtra("param",pharma);
+            startActivity(intent);
         }
-
         if(id==R.id.hospitalAproximit){
-            Intent add=new Intent(getApplicationContext(),GoogleMapActivity.class);
-            startActivity(add);
-
+            Intent intent=new Intent(getApplicationContext(),GoogleMapActivity.class);
+            String hopital="hospital";
+            intent.putExtra("param",hopital);
+            startActivity(intent);
         }
         if(id==R.id.notification){
             Intent add=new Intent(getApplicationContext(),ListeImage.class);
@@ -226,6 +249,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             showCustomDialog();
         }
         if(id==R.id.Deconnexion){
+            SharedPreferences.Editor prefsEditor = getSharedPreferences ("type_user_prefs",MODE_PRIVATE).edit();
+            prefsEditor.putBoolean("login",false);
+            prefsEditor.apply();
             Intent add=new Intent(getApplicationContext(),Login.class);
             startActivity(add);
         }
