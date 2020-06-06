@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/ajouPharGarde" android:title="Ajouter pharmacie garde" android:icon="@drawable/ic_add_circle_outline_black_24dp"></item>
-    <item android:id="@+id/ajouPhar" android:title="Inbox" android:icon="@drawable/ic_add_circle_outline_black_24dp"></item>
+    <item android:id="@+id/ajouPhar" android:title="Ajouter pharmacie" android:icon="@drawable/ic_add_circle_outline_black_24dp"></item>
     <item android:id="@+id/pharmacieGarde" android:title="Pharmacies de garde" android:icon="@drawable/ic_distance"></item>
     <item android:id="@+id/pharmacieAproximit" android:title="Pharmacies les plus proches" android:icon="@drawable/ic_medical"></item>
     <item android:id="@+id/hospitalAproximit" android:title="Hôpitaux les plus proches" android:icon="@drawable/ic_hospital"></item>

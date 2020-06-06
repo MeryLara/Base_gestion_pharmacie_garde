@@ -1,9 +1,7 @@
 package com.example.gestionpharmacie.map;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,8 +45,6 @@ class DataParser
         return googlePlaceMap;
     }
 
-
-
     private List<HashMap<String, String>> getAllNearbyPlaces(JSONArray jsonArray)
     {
         int counter = jsonArray.length();
@@ -70,11 +66,8 @@ class DataParser
                 e.printStackTrace();
             }
         }
-
         return NearbyPlacesList;
     }
-
-
 
     public List<HashMap<String, String>> parse(String jSONdata)
     {
@@ -90,7 +83,6 @@ class DataParser
         {
             e.printStackTrace();
         }
-
         return getAllNearbyPlaces(jsonArray);
     }
 }

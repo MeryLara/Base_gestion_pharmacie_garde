@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -25,9 +24,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -62,17 +58,12 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     private ActionBarDrawerToggle mToggle;
     private  RecyclerView recyclerView;
     RecyclerView.Adapter mAdapter;
-
-
     RecyclerView.LayoutManager layoutManager;
     List<Garde> gardes;
 
     //-----------------pop up
-
     FloatingActionButton addGarde ;
-
     NavigationView navigationView;
-
     RequestQueue rq;
     String req_url="http://192.168.1.162/android/pharmacie/listpharmacie.php";
     SharedPreferences prefs;
@@ -85,7 +76,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         getSupportActionBar().setTitle("Pharmacies Garde");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        SharedPreferences prefs = getSharedPreferences ("type_user_prefs",MODE_PRIVATE);
+        prefs = getSharedPreferences ("type_user_prefs",MODE_PRIVATE);
         String userType = prefs.getString("userType","user");
         Boolean login=prefs.getBoolean("login",false);
 
@@ -97,21 +88,12 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         if(userType.equals("user")) {
             hideItemsForUser();
         }
-
-
-
-
-
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
-
 
 //-------------------------------------------------------------------------------
 
        drawerLayout=(DrawerLayout) findViewById(R.id.draw);
-
         mToggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
@@ -125,7 +107,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         recyclerView.setHasFixedSize(true);
         layoutManager =new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-      //  pharmacies=new ArrayList<>();
         gardes=new ArrayList<>();
         sendRequest();
 
@@ -138,10 +119,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                startActivity(add);
            }
        });
-
-
-
-
 
     }
 
@@ -171,25 +148,19 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                         Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                         pharma.setImage(decodedImage);
 
-                   //     pharma.setImage(jsonObject.get(valueOf(bmp1)));
-
                         garde.setPharmacie(pharma);
                         Date dateGarde=new SimpleDateFormat("yyyy-MM-dd").parse(jsonObject.getString("date"));
                         garde.setDate(dateGarde);
 
-                        System.out.println(garde.getPharmacie().getNom_pharmacie()+""+garde.getPharmacie().getNumTel()+""+garde.getPharmacie().getSite()+""+garde.getPharmacie().getAdresse());
-                        System.out.println(garde.getDate());
-                        System.out.println("-----------------------------------------");
+                       // System.out.println(garde.getPharmacie().getNom_pharmacie()+""+garde.getPharmacie().getNumTel()+""+garde.getPharmacie().getSite()+""+garde.getPharmacie().getAdresse());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }catch (Exception ee){
                         ee.printStackTrace();
 
                     }
-                   // pharmacies.add(pharma);
                     gardes.add(garde);
                 }
-               // mAdapter = new Adapter(Home.this, pharmacies);
                 mAdapter = new Adapter(Home.this, gardes);
                 recyclerView.setAdapter(mAdapter);
 

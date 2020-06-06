@@ -2,15 +2,11 @@ package com.example.gestionpharmacie.map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentActivity;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,12 +20,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.example.gestionpharmacie.Home;
 import com.example.gestionpharmacie.Login;
 import com.example.gestionpharmacie.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -62,8 +54,6 @@ public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyC
     private double latitide, longitude;
     private int ProximityRadius = 10000;
 
-    private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle mToggle;
     private String placeType;
 
     @Override
@@ -72,7 +62,6 @@ public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyC
         setContentView(R.layout.activity_google_map);
 
         SharedPreferences prefs = getSharedPreferences ("type_user_prefs",MODE_PRIVATE);
-        String userType = prefs.getString("userType","user");
         Boolean login=prefs.getBoolean("login",false);
 
         if(!login){
@@ -150,13 +139,11 @@ public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyC
                                 transferData[1] = url;
                                 getNearbyPlaces.execute(transferData);
 
-
-
                                 }
                         }
                         else
                         {
-                            Toast.makeText(this, "Location not found...", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Lieu non trouvé...", Toast.LENGTH_SHORT).show();
                         }
                     }
                     catch (IOException e)
@@ -166,15 +153,12 @@ public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyC
                 }
                 else
                 {
-                    Toast.makeText(this, "please write any location name...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Veuillez écrire n'importe quel nom de lieu...", Toast.LENGTH_SHORT).show();
                 }
                 break;
 
-
         }
     }
-
-
 
     private String getUrl(double latitide, double longitude, String nearbyPlace)
     {
@@ -197,9 +181,6 @@ public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyC
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
         {
             buildGoogleApiClient();
-            Toast.makeText(getApplicationContext(), "my location", Toast.LENGTH_SHORT).show();
-
-
             mMap.setMyLocationEnabled(true);
 
         }
@@ -244,7 +225,7 @@ public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyC
                 }
                 else
                 {
-                    Toast.makeText(this, "Permission Denied...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Permission refusée...", Toast.LENGTH_SHORT).show();
                 }
                 return;
         }
@@ -282,7 +263,7 @@ public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyC
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
-        markerOptions.title("user Current Location");
+        markerOptions.title("Emplacement actuel de l'utilisateur");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
 
         currentUserLocationMarker = mMap.addMarker(markerOptions);
@@ -302,10 +283,6 @@ public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyC
         {
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
         }
-
-
-
-
 
     }
 
@@ -329,7 +306,6 @@ public class GoogleMapActivity extends AppCompatActivity implements  OnMapReadyC
     public void onConnectionSuspended(int i) {
 
     }
-
 
     @Override
     public void onBackPressed() {

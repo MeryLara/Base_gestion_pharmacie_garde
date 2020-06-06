@@ -1,6 +1,8 @@
 package com.example.gestionpharmacie;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -86,6 +88,17 @@ public class AjouterPharmacie extends AppCompatActivity implements View.OnClickL
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.draw);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private void showFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");

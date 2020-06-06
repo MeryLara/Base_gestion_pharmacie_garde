@@ -17,8 +17,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class RequestHandler {
 
-    public String sendPostRequest(String requestURL,
-                                  HashMap<String, String> postDataParams) {
+    public String sendPostRequest(String requestURL,HashMap<String, String> postDataParams) {
 
         URL url;
         String response = "";
@@ -31,10 +30,6 @@ public class RequestHandler {
             conn.setRequestMethod("POST");
             conn.setDoInput(true);
             conn.setDoOutput(true);
-
-
-
-
             OutputStream os = conn.getOutputStream();
             BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(os, "UTF-8"));
@@ -46,7 +41,6 @@ public class RequestHandler {
             int responseCode = conn.getResponseCode();
 
             if (responseCode == HttpsURLConnection.HTTP_OK) {
-
 
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
                     StringBuilder rsp = new StringBuilder();
@@ -75,7 +69,6 @@ public class RequestHandler {
                 first = false;
             else
                 result.append("&");
-
             result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
             result.append("=");
             result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));

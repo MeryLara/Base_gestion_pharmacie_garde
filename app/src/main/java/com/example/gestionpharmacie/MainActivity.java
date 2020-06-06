@@ -8,6 +8,9 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,51 +29,47 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.regex.Pattern;
 
 
 public class MainActivity extends AppCompatActivity {
 
     EditText nom, prenom, email, password,username,tel;
     Button b1, btnLogEnreg;
-    JSONObject jsonObject = new JSONObject();
-    ArrayList<String> tasksData = null;
-    ArrayAdapter<String> adapter = null;
     Spinner snptype;
     TextView txtmessg;
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    //"(?=.*[0-9])" +         //at least 1 digit
+                    //"(?=.*[a-z])" +         //at least 1 lower case letter
+                    //"(?=.*[A-Z])" +         //at least 1 upper case letter
+                    "(?=.*[a-zA-Z])" +      //any letter
+                    "(?=.*[@#$%^&+=])" +    //at least 1 special character
+                    "(?=\\S+$)" +           //no white spaces
+                    ".{4,}" +               //at least 4 characters
+                    "$");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SharedPreferences prefs = getSharedPreferences ("type_user_prefs",MODE_PRIVATE);
-        String userType = prefs.getString("userType","user");
-        Boolean login=prefs.getBoolean("login",false);
-
-        if(!login){
-            Intent add=new Intent(getApplicationContext(),Login.class);
-            startActivity(add);
-
-        }
-
         // Spinner element
         snptype = (Spinner) findViewById(R.id.spinner);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.planets_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
         snptype.setAdapter(adapter);
 
         username=findViewById(R.id.edtusername);
         nom = findViewById(R.id.edtNom);
         prenom = findViewById(R.id.edtprenom);
         email = findViewById(R.id.edtemail);
+
         password = findViewById(R.id.edtpass);
         tel = findViewById(R.id.edtTel);
         b1 = findViewById(R.id.btnEnreg);
+
         btnLogEnreg = findViewById(R.id.btnLoginEnreg);
         btnLogEnreg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +79,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    private boolean validateEmail() {
+        String emailInput = email.getText().toString().trim();
+
+        if (emailInput.isEmpty()) {
+            email.setError("Field can't be empty");
+            return false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
+            email.setError("Please enter a valid email address");
+            return false;
+        } else {
+            email.setError(null);
+            return true;
+        }
+    }
 
     public void Onregister(View v) {
 
@@ -87,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
         String snom=nom.getText().toString();
         String sprenom=prenom.getText().toString();
         String semail=email.getText().toString();
+
+
         String pass=password.getText().toString();
         String stel=tel.getText().toString();
         String type=snptype.getSelectedItem().toString();
@@ -96,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
         }else
         if(snom.matches("")){
-            nom.setBackgroundColor(Color.MAGENTA);
+            nom.setBackgroundColor(Color.YELLOW);
         }else
         if(sprenom.matches("")){
             prenom.setBackgroundColor(Color.MAGENTA);
@@ -110,18 +125,16 @@ public class MainActivity extends AppCompatActivity {
         if(stel.matches("")){
             tel.setBackgroundColor(Color.MAGENTA);
         }else{
+            if (!validateEmail()) {
+                return;
+            }
             InsertUser insertUser=new InsertUser();
             insertUser.execute(suser,pass,snom,sprenom,semail,type,stel);
         }
 
-
-
     }
 
-
     class InsertUser extends AsyncTask<String, Integer, String> {
-        HashMap<String, String> postDataParams;
-
 
         @SuppressLint("WrongThread")
         @Override
@@ -144,9 +157,6 @@ public class MainActivity extends AppCompatActivity {
                 con.setRequestProperty("Accept","application/json");
                 con.setDoOutput(true);
                 String jsonInputString = "{\"action\": \""+action+"\", \"username\": \""+user+"\",\"type\": \""+type+"\", \"nom\": \""+nom+"\", \"prenom\" : \""+prenom+"\",\"numTel\" :\""+tel+"\" ,\"email\" : \""+email+"\",\"password\" : \""+pass+"\"}";
-
-
-
 
                 System.out.println(jsonInputString);
                 try(OutputStream os = con.getOutputStream()) {
@@ -182,8 +192,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            //tasksData.add(newTask);
-            //adapter.notifyDataSetChanged();
+
             txtmessg=findViewById(R.id.txtMessage);
             try {
                 JSONObject jsonResponse = new JSONObject(s);
@@ -197,6 +206,15 @@ public class MainActivity extends AppCompatActivity {
                         txtmessg.setText("enregistre ok");
                         //vider les champs
                     txtmessg.setBackgroundColor(Color.GREEN);
+                    nom.setText("");
+                    prenom.setText("");
+                    email.setText("");
+                    password.setText("");
+                    username.setText("");
+                    tel.setText("");
+
+
+
 
                     }
             }catch (JSONException e){
@@ -204,7 +222,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
-
 }
 
 }

@@ -4,14 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,14 +22,12 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-
 public class Login extends AppCompatActivity {
 
     EditText edtuser,edtPass;
     TextView txtMessageErreur,txtSinscrire;
     Button btnLogin;
-    String type;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,17 +37,20 @@ public class Login extends AppCompatActivity {
         edtuser=findViewById(R.id.edtusernameConnect);
         edtPass=findViewById(R.id.edtpasswordConnect);
         btnLogin=findViewById(R.id.btnConnect);
-        txtSinscrire=findViewById(R.id.txtSinscrire);
 
+        txtSinscrire=findViewById(R.id.txtSinscrire);
         txtSinscrire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+                Intent intent=new Intent(Login.this,MainActivity.class);
                 startActivity(intent);
             }
         });
 
+
     }
+
+
 
     public void OnrConnect(View v) {
 
@@ -73,7 +71,6 @@ public class Login extends AppCompatActivity {
     }
 
     class connect extends AsyncTask<String, Integer, String> {
-        HashMap<String, String> postDataParams;
 
         @Override
         protected String doInBackground(String... args) {
@@ -93,8 +90,6 @@ public class Login extends AppCompatActivity {
                 con.setDoOutput(true);
                 String jsonInputString = "{\"action\": \""+action+"\", \"username\": \""+user+"\",\"password\" : \""+pass+"\"}";
 
-               // System.out.println("testest"+jsonInputString);
-                System.out.println();
                 try(OutputStream os = con.getOutputStream()) {
                     byte[] input = jsonInputString.getBytes("utf-8");
                     os.write(input, 0, input.length);
@@ -108,15 +103,10 @@ public class Login extends AppCompatActivity {
                     }
 
                     JSONObject jsonObject=new JSONObject(response.toString());
-                     System.out.println("test test test test"+jsonObject.getString("type"));
-                    SharedPreferences.Editor prefsEditor = getSharedPreferences ("type_user_prefs",MODE_PRIVATE).edit();
+                   SharedPreferences.Editor prefsEditor = getSharedPreferences ("type_user_prefs",MODE_PRIVATE).edit();
                     prefsEditor.putString("userType",jsonObject.getString("type"));
                     prefsEditor.putBoolean("login",true);
                     prefsEditor.apply();
-
-
-
-
 
                     return response.toString();
                 }
@@ -136,15 +126,22 @@ public class Login extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(String s) {
+
+
             txtMessageErreur=findViewById(R.id.txtMessageErreur);
             try {
+
                 JSONObject jsonResponse = new JSONObject(s);
+
                 if(!jsonResponse.getBoolean("success")){
+                    System.out.println("erreur"+jsonResponse);
                     txtMessageErreur.setText(" Utilisateur n'exist pas !!! ");
                 } else {
+                    System.out.println("success"+jsonResponse);
                     Intent intent=new Intent(Login.this,Home.class);
                     startActivity(intent);
                 }
+
             }catch (JSONException e){
                 e.getStackTrace();
             }

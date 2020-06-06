@@ -77,11 +77,11 @@ public class AddGarde extends AppCompatActivity {
 
 
      /*   SharedPreferences prefs = getSharedPreferences ("type_user_prefs",MODE_PRIVATE);
-        String userType = prefs.getString("userType","user");
+        String userType = prefs.getString("userType","user");*/
 
         if(userType.equals("user")) {
             txtAjouterPharmacie.setVisibility(View.GONE);
-        }*/
+        }
         buttonOk=(Button)findViewById(R.id.buttonOk);
         btnAjouter=(Button)findViewById(R.id.btnAjouter);
         btnScanner=(Button)findViewById(R.id.btnScanner);
@@ -185,7 +185,7 @@ public class AddGarde extends AppCompatActivity {
             protected void onPostExecute(String s)
             {
                 super.onPostExecute(s);
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+           //     Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 try
                 {
                     loadIntoListView(s);

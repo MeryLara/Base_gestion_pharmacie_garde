@@ -46,7 +46,6 @@ public class ScannerImage extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_scanner_image);
 
         SharedPreferences prefs = getSharedPreferences ("type_user_prefs",MODE_PRIVATE);
-        String userType = prefs.getString("userType","user");
         Boolean login=prefs.getBoolean("login",false);
 
         if(!login){
@@ -57,22 +56,13 @@ public class ScannerImage extends AppCompatActivity implements View.OnClickListe
 
         getSupportActionBar().setTitle("Scanner image");
        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-
         buttonChoose = (Button) findViewById(R.id.buttonChoose);
         buttonUpload = (Button) findViewById(R.id.buttonUpload);
-
-
-
         imageView = (ImageView) findViewById(R.id.imageView);
-
         edtVille=(EditText)findViewById(R.id.edtVille);
-
         buttonChoose.setOnClickListener(this);
         buttonUpload.setOnClickListener(this);
     }
-
 
     private void showFileChooser() {
         Intent intent = new Intent();
@@ -97,7 +87,6 @@ public class ScannerImage extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
     public String getStringImage(Bitmap bmp){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -106,27 +95,22 @@ public class ScannerImage extends AppCompatActivity implements View.OnClickListe
         return encodedImage;
     }
 
-
-
     private void uploadImage(){
         class UploadImage extends AsyncTask<Bitmap,Void,String> {
 
            String ville= edtVille.getText().toString();
-
             ProgressDialog loading;
             RequestHandler rh = new RequestHandler();
 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(ScannerImage.this, "Uploading Image", "Please wait...",true,true);
+                loading = ProgressDialog.show(ScannerImage.this, "Téléchargement d'image", "S'il vous plaît, attendez...",true,true);
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-
-
                 loading.dismiss();
                 Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
             }

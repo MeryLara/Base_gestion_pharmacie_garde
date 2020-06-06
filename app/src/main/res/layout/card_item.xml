@@ -95,16 +95,26 @@
                     android:layout_width="110dp"
                     android:layout_height="30dp"
                     android:layout_below="@+id/desc"
-
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="125dp"
                     android:layout_marginTop="7dp"
                     android:layout_marginEnd="116dp"
-                    android:background="@drawable/btn_read_mor"
+                    android:background="@drawable/button"
                     android:text="Localisation"
                     android:textColor="@color/white"
-                    android:textSize="11dp" />
+                    android:textSize="11dp"
+                    android:layout_marginBottom="7dp"
+
+
+                    />
+
+
+
+
+
+
+
 
             </LinearLayout>
 

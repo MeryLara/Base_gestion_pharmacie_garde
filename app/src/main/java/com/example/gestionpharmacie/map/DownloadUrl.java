@@ -21,11 +21,9 @@ class DownloadUrl
             URL url = new URL(placeURL);
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.connect();
-
             inputStream = httpURLConnection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             StringBuffer stringBuffer = new StringBuffer();
-
             String line = "";
 
             while ( (line = bufferedReader.readLine()) != null )

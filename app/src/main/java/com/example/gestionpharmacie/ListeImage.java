@@ -22,8 +22,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -32,7 +30,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gestionpharmacie.map.GoogleMapActivity;
 import com.example.gestionpharmacie.metier.AdapterListeImage;
-import com.example.gestionpharmacie.metier.Garde;
 import com.example.gestionpharmacie.metier.ImageCapture;
 import com.google.android.material.navigation.NavigationView;
 
@@ -109,13 +106,9 @@ public class ListeImage extends AppCompatActivity implements NavigationView.OnNa
                         JSONObject jsonObject = response.getJSONObject(i);
                         image.setVille(jsonObject.getString("ville"));
                         image.setId_image(jsonObject.getInt("id_image"));
-
-
                         byte[] decodedString = Base64.decode(jsonObject.getString("imageGarde"), Base64.DEFAULT);
                         Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                         image.setImage(decodedImage);
-
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }catch (Exception ee){

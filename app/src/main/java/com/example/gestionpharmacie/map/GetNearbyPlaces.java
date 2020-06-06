@@ -32,10 +32,8 @@ public class GetNearbyPlaces extends AsyncTask<Object, String, String>
         {
             e.printStackTrace();
         }
-
         return googleplaceData;
     }
-
 
     @Override
     protected void onPostExecute(String s)
@@ -46,7 +44,6 @@ public class GetNearbyPlaces extends AsyncTask<Object, String, String>
 
         DisplayNearbyPlaces(nearByPlacesList);
     }
-
 
     private void DisplayNearbyPlaces(List<HashMap<String, String>> nearByPlacesList)
     {
@@ -59,7 +56,6 @@ public class GetNearbyPlaces extends AsyncTask<Object, String, String>
             String vicinity = googleNearbyPlace.get("vicinity");
             double lat = Double.parseDouble(googleNearbyPlace.get("lat"));
             double lng = Double.parseDouble(googleNearbyPlace.get("lng"));
-
 
             LatLng latLng = new LatLng(lat, lng);
             markerOptions.position(latLng);
