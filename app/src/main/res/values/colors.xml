@@ -2,9 +2,9 @@
 <resources>
     <color name="colorPrimary">#00b9d2</color>
     <color name="colorPrimaryDark">#00b9d2</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#00BCD4</color>
     <color name="white">#ffffff</color>
     <color name="darkgray">#6c6c6c</color>
-    <color name="Erreur">#B64B4B</color>
+    <color name="Erreur">#00BCD4</color>
 
 </resources>

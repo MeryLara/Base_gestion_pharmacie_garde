@@ -324,7 +324,7 @@ class RecupererPharmacie extends AsyncTask<String, Integer, String>
         }
         @Override
         protected void onPostExecute(String s) {
-           Toast.makeText(AddGarde.this,s,Toast.LENGTH_LONG).show();
+          // Toast.makeText(AddGarde.this,s,Toast.LENGTH_LONG).show();
 
         }
 

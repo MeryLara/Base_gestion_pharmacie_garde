@@ -100,7 +100,7 @@
                     android:layout_marginStart="125dp"
                     android:layout_marginTop="7dp"
                     android:layout_marginEnd="116dp"
-                    android:background="@drawable/button"
+                    android:background="#f48f00"
                     android:text="Localisation"
                     android:textColor="@color/white"
                     android:textSize="11dp"
