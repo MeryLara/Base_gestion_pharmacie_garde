@@ -83,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
         String emailInput = email.getText().toString().trim();
 
         if (emailInput.isEmpty()) {
-            email.setError("Field can't be empty");
+            email.setError("Ne peut pas etre vide");
             return false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
-            email.setError("Please enter a valid email address");
+            email.setError("S'il vous plaît, mettez une adresse email valide");
             return false;
         } else {
             email.setError(null);

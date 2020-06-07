@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -126,7 +127,7 @@ public class AjouterPharmacie extends AppCompatActivity implements View.OnClickL
 
     public String getStringImage(Bitmap bmp){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
@@ -145,18 +146,14 @@ public class AjouterPharmacie extends AppCompatActivity implements View.OnClickL
 
             ProgressDialog loading;
             RequestHandler rh = new RequestHandler();
-
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
                 loading = ProgressDialog.show(AjouterPharmacie.this, "Uploading Image", "Please wait...",true,true);
             }
-
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-
-
                 loading.dismiss();
                 Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
             }
@@ -182,9 +179,38 @@ public class AjouterPharmacie extends AppCompatActivity implements View.OnClickL
                 return result;
             }
         }
+        String nom= edtPharmacie.getText().toString();
+        String tel= edtTel.getText().toString();
+        String site= edtSite.getText().toString();
+        String adresse= edtAdresse.getText().toString();
+        String cpostal= edtCodePostal.getText().toString();
+        String ville= edtVille.getText().toString();
+        String pays= edtPays.getText().toString();
 
-        UploadImage ui = new UploadImage();
-        ui.execute(bitmap);
+        if(nom.matches("")){
+            Toast.makeText(this, "Veuillez remplir le champs !!", Toast.LENGTH_SHORT).show();
+
+        }else
+        if(tel.matches("")){
+            Toast.makeText(this, "Veuillez remplir le champs !!", Toast.LENGTH_SHORT).show();
+        }else
+        if(site.matches("")){
+            Toast.makeText(this, "Veuillez remplir le champs !!", Toast.LENGTH_SHORT).show();
+        }else
+        if(adresse.matches("")){
+            Toast.makeText(this, "Veuillez remplir le champs !!", Toast.LENGTH_SHORT).show();
+        }else
+        if(cpostal.matches("")){
+            Toast.makeText(this, "Veuillez remplir le champs !!", Toast.LENGTH_SHORT).show();
+        }else
+        if(ville.matches("")){
+            Toast.makeText(this, "Veuillez remplir le champs !!", Toast.LENGTH_SHORT).show();
+        }else
+        if(pays.matches("")){
+            Toast.makeText(this, "Veuillez remplir le champs !!", Toast.LENGTH_SHORT).show();
+        }else{
+            UploadImage ui = new UploadImage();
+            ui.execute(bitmap);        }
     }
 
 

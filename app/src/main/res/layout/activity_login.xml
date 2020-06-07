@@ -18,17 +18,18 @@
             android:layout_width="170dp"
             android:layout_height="170dp"
             android:layout_gravity="center"
-            android:src="@drawable/login" />
+            android:src="@drawable/logo" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="Wellcome to PHG"
-            android:textColor="#2CA7E0"
+
+            android:text=" Bienvenue à SIHATY "
+            android:textColor="#00b9d2"
             android:textSize="25dp"
             android:textStyle="bold" />
+
         <TextView
             android:id="@+id/txtMessageErreur"
             android:layout_width="wrap_content"
@@ -46,8 +47,8 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:hint="username"
-            android:textColorHint="#2CA7E0"
+            android:hint="Nom d'utilisateur"
+            android:textColorHint="#00b9d2"
             android:layout_gravity="center"
             android:drawableLeft="@drawable/ic_person"
             android:drawablePadding="10dp"
@@ -59,8 +60,8 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:hint="password"
-            android:textColorHint="#2CA7E0"
+            android:hint="mot de passe"
+            android:textColorHint="#00b9d2"
             android:layout_gravity="center"
             android:drawableLeft="@drawable/ic_person"
             android:drawablePadding="10dp"
@@ -81,11 +82,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="35dp"
+                android:layout_marginRight="100dp"
                 android:fontFamily="sans-serif-medium"
                 android:linksClickable="true"
                 android:text="S'inscrire "
-                android:textColor="#2CA7E0"
+                android:textColor="#00b9d2"
 
                 android:textSize="15dp" />
 
@@ -96,7 +97,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="sans-serif-medium"
                 android:text="Forget Password?"
-                android:textColor="#2CA7E0"
+                android:textColor="#00b9d2"
                 android:textSize="15dp" />
         </LinearLayout>
 

@@ -46,11 +46,9 @@
         android:id="@+id/btnAjouter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#0040FF"
-
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="5dp"
         android:text="Ajouter"
-
-
         android:textColor="@color/white"
         android:textSize="14dp" />
 
@@ -86,6 +84,6 @@
         android:textColor="@color/white"
         android:text="Scanner"
         android:textSize="14dp"
-        android:background="#04B404"
+        android:background="#4CAF50"
         />
 </LinearLayout>

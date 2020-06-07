@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
-            android:text="Bienvenue dans l'pplication GardePharmacy :Nous avons pour objectif d'etre l'application qui fournit les pharmacies de garde pour toutes les villes."
+            android:text="Bienvenue dans l'pplication GardePharmacy :Nous avons pour objectif d'etre un service qui fournit les pharmacies de garde pour toutes les villes."
             android:textAlignment="inherit"
             android:textSize="14dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />

@@ -17,6 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gestionpharmacie.AddGarde;
+import com.example.gestionpharmacie.ListeImage;
 import com.example.gestionpharmacie.R;
 
 import java.io.BufferedReader;
@@ -137,6 +138,9 @@ public class AdapterListeImage extends RecyclerView.Adapter<AdapterListeImage.my
                     DeleteImage deleteImage=new DeleteImage();
                     deleteImage.execute(captureImageId);
                     Toast.makeText(mcontext.getApplicationContext(),"Ces information sont bien supprimer", Toast.LENGTH_SHORT).show();
+                    Intent intent =new Intent(mcontext.getApplicationContext(), ListeImage.class);
+                    mcontext.startActivity(intent);
+
                 }
             });
 
