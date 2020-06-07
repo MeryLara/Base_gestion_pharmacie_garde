@@ -8,16 +8,12 @@ import android.os.Handler;
 
 public class SplashScrene extends AppCompatActivity {
 
-
   //  private static int SPLASH_TIME_OUT=4000;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screne);
-
-
-
 
         new Handler().postDelayed(new Runnable()
         {
